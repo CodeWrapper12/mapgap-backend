@@ -15,6 +15,7 @@
     <!-- Web / API -->
     <PackageReference Include="FastEndpoints" Version="5.*" />
     <PackageReference Include="FastEndpoints.Security" Version="5.*" />
+    <PackageReference Include="FastEndpoints.Swagger" Version="5.*" />
     <PackageReference Include="MediatR" Version="12.*" />
 
     <!-- Data -->
@@ -35,6 +36,7 @@
 
     <!-- CV text extraction (PDF + docx) -->
     <PackageReference Include="PdfPig" Version="0.*" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.16.6" />
     <!-- docx text is read via DocumentFormat.OpenXml above -->
   </ItemGroup>
 
