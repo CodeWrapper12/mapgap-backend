@@ -32,6 +32,8 @@ builder.Services.AddSingleton(jwtOpts);
 builder.Services.AddSingleton(aiOpts);
 builder.Services.AddSingleton(quotaOpts);
 builder.Services.AddSingleton(rates);
+var allowedOrigin = cfg["Frontend:Origin"] ?? "http://localhost:3000";
+Console.WriteLine($"DEBUG: CORS Allowed Origin is: {allowedOrigin}");
 
 // ---- Data ----
 builder.Services.AddDbContext<GapMapDbContext>(o =>
