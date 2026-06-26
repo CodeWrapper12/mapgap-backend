@@ -1,0 +1,7 @@
+bin/
+obj/
+*.user
+appsettings.*.local.json
+.vs/
+.idea/
+*.DotSettings.user
