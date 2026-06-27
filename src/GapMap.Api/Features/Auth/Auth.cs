@@ -232,3 +232,12 @@ public sealed class UpdateUserEndpoint(GapMapDbContext db) : Endpoint<UpdateUser
     }
 }
 
+public sealed class DebugMeEndpoint : EndpointWithoutRequest<object>
+{
+    public override void Configure() { Get("/auth/me"); } // requires auth
+    public override async Task HandleAsync(CancellationToken ct)
+    {
+        var claims = User.Claims.Select(c => new { c.Type, c.Value }).ToList();
+        await SendOkAsync(new { claims }, ct);
+    }
+}
