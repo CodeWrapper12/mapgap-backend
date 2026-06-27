@@ -13,6 +13,8 @@ using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using WDocument = DocumentFormat.OpenXml.Wordprocessing.Document;
+using WColor = DocumentFormat.OpenXml.Wordprocessing.Color;
+using WPageSize = DocumentFormat.OpenXml.Wordprocessing.PageSize;
 using PDocument = QuestPDF.Fluent.Document;
 
 namespace GapMap.Api.Features.Export;
@@ -162,7 +164,7 @@ public static class DocxRenderer
                 var rPr = new RunProperties(
                     new Bold { Val = OnOffValue.FromBoolean(bold) },
                     new FontSize { Val = size.ToString() });
-                if (color != null) rPr.Append(new Color { Val = color });
+                if (color != null) rPr.Append(new WColor { Val = color });
                 body.Append(new Paragraph(new Run(rPr, new Text(text) { Space = SpaceProcessingModeValues.Preserve })));
             }
 
@@ -173,7 +175,7 @@ public static class DocxRenderer
                     new ParagraphBorders(new BottomBorder { Val = BorderValues.Single, Size = 4U, Space = 1U, Color = "BBBBBB" }),
                     new SpacingBetweenLines { Before = "160", After = "40" });
                 body.Append(new Paragraph(pPr,
-                    new Run(new RunProperties(new Bold(), new FontSize { Val = "22" }, new Color { Val = "333333" }),
+                    new Run(new RunProperties(new Bold(), new FontSize { Val = "22" }, new WColor { Val = "333333" }),
                         new Text(title.ToUpperInvariant()) { Space = SpaceProcessingModeValues.Preserve })));
             }
 
@@ -186,10 +188,10 @@ public static class DocxRenderer
                 p.Append(new Run(new RunProperties(new Bold(), new FontSize { Val = "20" }),
                     new Text(leftBold) { Space = SpaceProcessingModeValues.Preserve }));
                 if (!string.IsNullOrWhiteSpace(leftNormal))
-                    p.Append(new Run(new RunProperties(new FontSize { Val = "20" }, new Color { Val = "555555" }),
+                    p.Append(new Run(new RunProperties(new FontSize { Val = "20" }, new WColor { Val = "555555" }),
                         new Text(leftNormal) { Space = SpaceProcessingModeValues.Preserve }));
                 p.Append(new Run(new TabChar()));
-                p.Append(new Run(new RunProperties(new FontSize { Val = "18" }, new Color { Val = "555555" }),
+                p.Append(new Run(new RunProperties(new FontSize { Val = "18" }, new WColor { Val = "555555" }),
                     new Text(right ?? "") { Space = SpaceProcessingModeValues.Preserve }));
                 body.Append(p);
             }
@@ -243,7 +245,7 @@ public static class DocxRenderer
                     if (!string.IsNullOrWhiteSpace(pr.Description)) Para(pr.Description);
                     if (pr.Tech.Count > 0)
                         body.Append(new Paragraph(new Run(
-                            new RunProperties(new Italic(), new FontSize { Val = "18" }, new Color { Val = "555555" }),
+                            new RunProperties(new Italic(), new FontSize { Val = "18" }, new WColor { Val = "555555" }),
                             new Text($"Tech: {string.Join(", ", pr.Tech)}") { Space = SpaceProcessingModeValues.Preserve })));
                 }
             }
@@ -269,7 +271,7 @@ public static class DocxRenderer
 
             // Page setup (A4, 0.75" margins) so the right tab stop lands at the margin.
             body.Append(new SectionProperties(
-                new PageSize { Width = 11906U, Height = 16838U },
+                new WPageSize { Width = 11906U, Height = 16838U },
                 new PageMargin { Top = 1080, Right = 1080U, Bottom = 1080, Left = 1080U, Header = 720U, Footer = 720U, Gutter = 0U }));
 
             main.Document.Save();
